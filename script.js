@@ -28,6 +28,7 @@ const editor = document.getElementById('text-editor')
 const crossIcon = document.getElementById('quitAll')
 const toast = document.getElementById('toast')
 const table = document.getElementById('linkTable')
+const panel = document.getElementById('panel')
 const transparentPixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
 const dlHelper = document.getElementById('dlHelper')
 
@@ -345,6 +346,7 @@ async function padOn (a) {
   setCursorTo(fileEdited)
   editor.style.display = crossIcon.style.display = 'block'
   table.style.display = 'none'
+  panel.style.display = 'none'
   editor.focus()
   window.onbeforeunload = warningMsg
   window.padTimer = setInterval(saveText, 5000)
@@ -357,6 +359,7 @@ window.displayPad = padOn
 function resetView () {
   softStatePushed = false
   table.style.display = 'table'
+  panel.style.display = 'block'
   picsHolder.src = transparentPixel
   videoHolder.src = ''
   editor.style.display = pics.style.display = video.style.display = crossIcon.style.display = 'none'
@@ -427,6 +430,7 @@ function clearArrowSelected () {
   const arr = getArrowSelected()
   if (!arr) { return }
   arr.classList.remove('arrow-selected')
+  arr.parentElement.parentElement.classList.remove('selected');
 }
 
 window.setCursorTo = setCursorTo
@@ -445,6 +449,9 @@ function setCursorTo (where) {
 
   const icon = a.parentElement.parentElement.querySelectorAll('.arrow-icon')[0]
   icon.classList.add('arrow-selected')
+  var row = a.parentElement.parentElement;
+  console.log("*********:", row);
+  row.classList.add('selected')
   scrollToArrow()
   storeArrow(where)
   return true
@@ -463,6 +470,9 @@ function moveArrow (down) {
   }
 
   all[i].classList.add('arrow-selected')
+  var row = all[i].parentElement.parentElement;
+  console.log("*********:", row);
+  row.classList.add('selected')
   storeArrow(getASelected().innerText)
   scrollToArrow()
 }

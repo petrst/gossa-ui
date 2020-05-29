@@ -43,12 +43,12 @@
     <div id="drop-grid"></div>
     <input type="file" id="clickupload" style="display:none"/>
 
-    <h1 onclick="return titleClick(event)">.{{.Title}}</h1>
+
 
     <div id="icHolder">
         {{if not .Ro}}
             <div style="display:none;" onclick="document.getElementById('clickupload').click()" class="ic icon-large-upload manualUp"></div>
-            <div onclick="window.displayPad()" class="ic icon-large-pad"></div>
+            <div class="ic icon-large-pad" onclick="window.displayPad()"></div>
             <div class="ic icon-large-folder" onclick="window.mkdirBtn()"></div>
         {{end}}
     </div>
@@ -56,24 +56,43 @@
     <div id="pics" style="display:none;"> <img draggable="false" onclick="window.picsNav()" id="picsHolder" /></div>
     <div id="video" style="display:none;"> <video controls id="videoHolder"></video></div>
 
+    <div id="panel">
+        <div id="caption">
+            <h1 onclick="return titleClick(event)">./</h1>
+        </div>
     <table id="linkTable">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Time</th>
+            </tr>
     {{range .RowsFolders}}
         <tr>
-            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
-            <td class="file-size"><code>{{.Size}}</code></td>
             <td class="arrow"><div class="arrow-icon"></div></td>
+            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
             <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
+            <td class="file-size">{{.Size}}</td>
+            <td class="file-modtime">{{.ModTime}}</td>
         </tr>
     {{end}}
     {{range .RowsFiles}}
         <tr>
-            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
-            <td class="file-size"><code>{{.Size}}</code></td>
             <td class="arrow"><div class="arrow-icon"></div></td>
+            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
             <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
+            <td class="file-size">{{.Size}}</td>
+            <td class="file-modtime">{{.ModTime}}</td>
+            
         </tr>
     {{end}}
     </table>
+    </div>
+    <div id="funckeysbar">
+       <span class="shortcut"><span class="fkey">F1</span>HELP</span>
+       <span class="shortcut"><span class="fkey">^E</span>RENAME</span>
+    </div>
 </body>
 <div id="upBar" class="bar">
     <span style="display: none;" class="barName" id="upBarName"></span>
